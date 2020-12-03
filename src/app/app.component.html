@@ -1,0 +1,10 @@
+<h1>Hey this is rajneesh</h1>
+  <div>
+    <div>
+      Welcome, <span *ngIf="$user | async as user; else guest"></span>
+    </div>
+    <button type="button" (click)="signOut();">Sign out</button>
+  </div>
+  <ng-template #guest>
+    <span>Guest</span>
+  </ng-template>
