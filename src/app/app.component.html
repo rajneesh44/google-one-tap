@@ -1,10 +1,29 @@
 <h1>Hey this is rajneesh</h1>
-  <div>
+
+<div>
     <div>
-      Welcome, <span *ngIf="$user | async as user; else guest"></span>
+
+        Welcome <span *ngIf="$user | async;then authenticated else guest">
+            
+            <!-- {{user?.displayName}} -->
+        
+    </span>
     </div>
-    <button type="button" (click)="signOut();">Sign out</button>
   </div>
+  <div class="g-signin2"></div>
   <ng-template #guest>
     <span>Guest</span>
+    <div class="g-signin2" data-width="300" data-height="200" data-longtitle="true"></div>
+    <!-- <button>
+        <i class="fa fa-google"></i> Connect Google
+    </button> -->
   </ng-template>
+
+  <ng-template #authenticated>
+    <div *ngIf="$user | async as user">
+        <!-- <h3>Howdy, {{ user.displayName }}</h3>
+         <img  [src]="user.photoURL"> 
+         <p>UID: {{ user.uid }}</p> -->
+        <button (click)="signOut()">Logout</button>
+    </div>
+</ng-template>

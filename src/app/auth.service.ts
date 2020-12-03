@@ -1,5 +1,4 @@
 import { Injectable, OnInit } from '@angular/core';
-// import { auth } from 'firebase';
 import firebase from 'firebase';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
@@ -19,9 +18,9 @@ export class AuthService{
   }
 
   init(): void {
-    // console.log(this.user);
+    console.log(this.user);
     window.onload = () => {
-      console.log(window)
+      console.log(window.google)
       window.google.accounts.id.initialize({
         client_id: environment.client_id,
         callback: (token:any) => {
@@ -33,6 +32,7 @@ export class AuthService{
       this.user.next(user);
       if (!user) {
         window.google.accounts.id.prompt();
+        
       }
     });
   }
