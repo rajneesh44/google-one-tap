@@ -8,18 +8,21 @@ import { AuthService } from './auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireModule, ɵAngularFireSchedulers } from '@angular/fire';
 import { environment } from 'src/environments/environment';
+import { OneTapComponent } from './one-tap/one-tap.component';
+import { SignInService } from './sign-in.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignInComponent,
+    OneTapComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
-  providers: [AuthService],
+  providers: [AuthService, SignInService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

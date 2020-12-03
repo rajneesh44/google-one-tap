@@ -32,7 +32,6 @@ export class AuthService{
       this.user.next(user);
       if (!user) {
         window.google.accounts.id.prompt();
-        
       }
     });
   }

@@ -6,18 +6,8 @@ import { AuthService } from './auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'one-tap';
-  $user: any;
   constructor(
-    private authService: AuthService
   ) { }
-
-  ngOnInit(): void {
-    console.log(this.authService.user);
-    this.$user = this.authService.user;
-  }
-
-  signOut(): void {
-    this.authService.signOut();
-  }
+  ngOnInit(): void {  }
 }
+  
