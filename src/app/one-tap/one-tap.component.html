@@ -1,22 +1,24 @@
 <p>one-tap works!</p>
 <div>
     <div>
-        Welcome <span *ngIf="$user | async;then authenticated else guest">   
+        Welcome <span *ngIf="$user | async;then authenticated else google">   
             <!-- {{user?.displayName}} -->
     </span>
     </div>
   </div>
+  <ng-template #google>
+      <app-sign-in></app-sign-in>
+  </ng-template>
+  
   <ng-template #guest>
     <span>Guest</span>
-    <!-- <div class="g-signin2" data-width="300" data-height="200" data-longtitle="true"></div> -->
-    <!-- <button>
-        <i class="fa fa-google"></i> Connect Google
-    </button> -->
+    <!-- <div class="g-signin2"></div> -->
   </ng-template>
 
   <ng-template #authenticated>
     <div *ngIf="$user | async as user">
-        <h3>Howdy, {{ user.displayName }}</h3>
+        <h3>hello</h3>
+        <h3>Howdy, {{ user?.displayName }}</h3>
          <!-- <img  [src]="user.photoURL">  -->
          <!-- <p>UID: {{ user.uid }}</p> --> 
         <button (click)="signOut()">Logout</button>

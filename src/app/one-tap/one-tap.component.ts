@@ -9,18 +9,17 @@ import { AuthService } from '../auth.service';
 export class OneTapComponent implements OnInit {
   title = 'one-tap';
   $user: any;
-  
   constructor(
     private authService: AuthService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit():Promise<void> {
     console.log(this.authService.user);
+   await this.authService.init();
     this.$user = this.authService.user;
   }
 
   signOut(): void {
     this.authService.signOut();
   }
-
 }

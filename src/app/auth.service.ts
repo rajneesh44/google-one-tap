@@ -11,37 +11,63 @@ declare var window : any;
 })
 export class AuthService{
   user = new BehaviorSubject<any>(this.fireAuth.currentUser);
+  isOneTap : boolean = false;
   constructor(
     private fireAuth: AngularFireAuth
   ) {
-    this.init();
   }
 
-  init(): void {
-    console.log(this.user);
-    window.onload = () => {
+  async init(): Promise<void> {
+     // required for single time one tap
+    console.log(window.localStorage.getItem('user'));  
+    if(!window.localStorage.getItem('user')){
       console.log(window.google)
-      window.google.accounts.id.initialize({
-        client_id: environment.client_id,
-        callback: (token:any) => {
-          this.handle(token);
-        }
-      });
-    };
-    this.fireAuth.onAuthStateChanged((user) => {
+       window.onload = () => this.oneTap();
+    }
+    await this.onAuthStateChanged();
+
+
+   
+    
+    window.google.accounts.id.prompt((notification) => {
+      if ((notification.isNotDisplayed() || notification.isSkippedMoment())) {
+        console.log('Incognito');
+        console.log('just below incogn', this.isOneTap);
+      }
+    });
+  }
+
+  async onAuthStateChanged(){
+    await this.fireAuth.onAuthStateChanged((user) => {
       this.user.next(user);
+      this.isOneTap = true;
       if (!user) {
         window.google.accounts.id.prompt();
       }
     });
   }
 
-  handle(token:any): void {
+  oneTap(){
+    window.google.accounts.id.initialize({
+      client_id: environment.client_id,
+      callback: async(token:any) => {
+        this.isOneTap = true;
+        console.log("handler", this.isOneTap);
+        window.localStorage.setItem('user',token);
+        await  this.handle(token);
+      }
+    });
+  }
+
+  async handle(token:any): Promise<void> {
     const credential = firebase.auth.GoogleAuthProvider.credential(token.credential);
-    this.fireAuth.signInWithCredential(credential);
+   await this.fireAuth.signInWithCredential(credential);
+    this.isOneTap = true;
+    console.log(this.isOneTap);
   }
 
   signOut(): void {
     this.fireAuth.signOut();
+    window.localStorage.removeItem('user');
   }
 }
