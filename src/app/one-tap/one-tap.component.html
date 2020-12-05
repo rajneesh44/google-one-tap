@@ -1,7 +1,7 @@
 <p>one-tap works!</p>
 <div>
     <div>
-        Welcome <span *ngIf="$user | async;then authenticated">   
+        Welcome <span *ngIf="$user | async as authenticated; else guest">   
             <!-- {{user?.displayName}} -->
     </span>
     </div>
@@ -15,7 +15,7 @@
     
   <ng-template #guest>
     <span>Guest</span>
-    <!-- <div class="g-signin2"></div> -->
+    <!-- <app-sign-in></app-sign-in> -->
   </ng-template>
 
   <ng-template #authenticated>

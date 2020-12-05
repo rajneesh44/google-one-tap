@@ -12,6 +12,7 @@ declare var window: any;
 export class AuthService {
   user = new BehaviorSubject<any>(this.fireAuth.currentUser);
   isOneTap = false;
+
   constructor(
     private fireAuth: AngularFireAuth
   ) {
@@ -25,7 +26,9 @@ export class AuthService {
     window.onload = () => this.oneTap();
     // }
     if(this.user){
+      console.log('if - >  ', this.user.value);
       await this.onAuthStateChanged();
+
     }
     
 
