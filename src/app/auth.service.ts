@@ -4,31 +4,31 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { BehaviorSubject } from 'rxjs';
 
-declare var window : any;
+declare var window: any;
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService{
+export class AuthService {
   user = new BehaviorSubject<any>(this.fireAuth.currentUser);
-  isOneTap : boolean = false;
+  isOneTap = false;
   constructor(
     private fireAuth: AngularFireAuth
   ) {
   }
 
   async init(): Promise<void> {
-     // required for single time one tap
-    console.log(window.localStorage.getItem('user'));  
-    if(!window.localStorage.getItem('user')){
-      console.log(window.google)
-       window.onload = () => this.oneTap();
+    // required for single time one tap
+    // console.log(window.localStorage.getItem('user'));
+    // if(!window.localStorage.getItem('user')){
+    //   console.log(window.google)
+    window.onload = () => this.oneTap();
+    // }
+    if(this.user){
+      await this.onAuthStateChanged();
     }
-    await this.onAuthStateChanged();
-
-
-   
     
+
     window.google.accounts.id.prompt((notification) => {
       if ((notification.isNotDisplayed() || notification.isSkippedMoment())) {
         console.log('Incognito');
@@ -36,38 +36,42 @@ export class AuthService{
       }
     });
   }
-
-  async onAuthStateChanged(){
+  async onAuthStateChanged(): Promise<void> {
     await this.fireAuth.onAuthStateChanged((user) => {
       this.user.next(user);
+      console.log(user?.displayName);
+      console.log(user?.email);
+      console.log(user?.uid);
+      console.log(user?.photoURL);
+      // console.log('user = ', user);
       this.isOneTap = true;
-      if (!user) {
+      if(!user) {
         window.google.accounts.id.prompt();
       }
     });
   }
-
-  oneTap(){
+  oneTap(): void {
     window.google.accounts.id.initialize({
       client_id: environment.client_id,
-      callback: async(token:any) => {
+      cancel_on_tap_outside : false,
+      callback: async (token: any) => {
         this.isOneTap = true;
-        console.log("handler", this.isOneTap);
-        window.localStorage.setItem('user',token);
-        await  this.handle(token);
+        console.log('handler', this.isOneTap);
+        // window.localStorage.setItem('user',token);
+        await this.handle(token);
       }
     });
   }
 
-  async handle(token:any): Promise<void> {
+  async handle(token: any): Promise<void> {
     const credential = firebase.auth.GoogleAuthProvider.credential(token.credential);
-   await this.fireAuth.signInWithCredential(credential);
+    await this.fireAuth.signInWithCredential(credential);
     this.isOneTap = true;
     console.log(this.isOneTap);
   }
 
   signOut(): void {
     this.fireAuth.signOut();
-    window.localStorage.removeItem('user');
+    // window.localStorage.removeItem('user');
   }
 }

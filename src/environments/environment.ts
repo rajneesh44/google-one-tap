@@ -4,16 +4,16 @@
 
 export const environment = {
   production: false,
-  client_id :"83795806579-1emdk7t98jmvurc1ui431andcnusp0ud.apps.googleusercontent.com" ,
-  firebaseConfig : {
-    apiKey: "AIzaSyBUbn4NKQCwGhHhYwm7FSxl4copWlskbZo",
-    authDomain: "one-tap-297412.firebaseapp.com",
-    databaseURL: "https://one-tap-297412.firebaseio.com",
-    projectId: "one-tap-297412",
-    storageBucket: "one-tap-297412.appspot.com",
-    messagingSenderId: "83795806579",
-    appId: "1:83795806579:web:e8037f97c9cedeb6d9dd06",
-    measurementId: "G-9P85TMY6CT"
+  client_id: '83795806579-1emdk7t98jmvurc1ui431andcnusp0ud.apps.googleusercontent.com',
+  firebaseConfig: {
+    apiKey: 'AIzaSyBUbn4NKQCwGhHhYwm7FSxl4copWlskbZo',
+    authDomain: 'one-tap-297412.firebaseapp.com',
+    databaseURL: 'https://one-tap-297412.firebaseio.com',
+    projectId: 'one-tap-297412',
+    storageBucket: 'one-tap-297412.appspot.com',
+    messagingSenderId: '83795806579',
+    appId: '1:83795806579:web:e8037f97c9cedeb6d9dd06',
+    measurementId: 'G-9P85TMY6CT'
   },
 };
 
