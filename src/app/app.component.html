@@ -1,5 +1,9 @@
 <h1>Hey this is rajneesh</h1>
-<app-one-tap></app-one-tap>
+<span *ngIf="!user">
+	<app-one-tap *ngIf="isOneTap"></app-one-tap>
+	<app-sign-in *ngIf="!isOneTap"></app-sign-in>
+</span>
 
-<!-- <app-sign-in></app-sign-in> -->
+
+
 <!-- <app-gsign-in-only></app-gsign-in-only> -->
