@@ -15,10 +15,10 @@ export class OneTapComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     console.log(this.authService.user);
     await this.authService.init();
-    console.log('consling', this.$user);
-    this.$user = this.authService.user;
-    if (this.$user){
-      this.NotisOneTap = true;
+    if (this.authService.isOneTap) {
+      console.log('signIn with onetap');
+    } else {
+      console.log('singIn');
     }
     console.log('assacscas', this.NotisOneTap);
     console.log('scscs', this.$user);
